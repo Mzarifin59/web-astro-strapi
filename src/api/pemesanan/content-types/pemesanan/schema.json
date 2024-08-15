@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pemesanans",
+  "info": {
+    "singularName": "pemesanan",
+    "pluralName": "pemesanans",
+    "displayName": "pemesanan"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nama_pemesan": {
+      "type": "string"
+    },
+    "jumlah_beli": {
+      "type": "integer"
+    },
+    "total_harga": {
+      "type": "integer"
+    },
+    "jenis_pembayaran": {
+      "type": "string"
+    },
+    "tanggal_pesan": {
+      "type": "date"
+    },
+    "barangs": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::barang.barang",
+      "inversedBy": "pemesanans"
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "kind": "collectionType",
+  "collectionName": "barangs",
+  "info": {
+    "singularName": "barang",
+    "pluralName": "barangs",
+    "displayName": "Barang",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nama": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "satuan": {
+      "type": "string"
+    },
+    "harga_pokok": {
+      "type": "integer"
+    },
+    "harga_satuan": {
+      "type": "integer"
+    },
+    "stock": {
+      "type": "integer"
+    },
+    "pemesanans": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::pemesanan.pemesanan",
+      "mappedBy": "barangs"
+    },
+    "image": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}
