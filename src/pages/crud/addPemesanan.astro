@@ -1,0 +1,132 @@
+---
+import '../../styles/global.css';
+import Navigation from '../../components/navigation.astro';
+
+const response = await fetch(`http://localhost:1337/api/barangs`);
+const data = await response.json();
+const detailProduct = data.data;
+
+const today = new Date().toISOString().split('T')[0];
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Create-Pemesanan</title>
+        <style>
+            h1{
+                text-align: center;
+            }
+        </style>
+	</head>
+	<body>
+        <Navigation></Navigation>
+    <div class="container">
+        <h1>Tambah Pemesanan</h1>
+        <div class="form-container">
+            <form id="addItemForm">
+                <label for="nama_pemesan">Nama Pemesan:</label>
+                <input type="text" id="nama_pemesan" name="nama_pemesan" required>
+
+                <label for="barang">Barang :</label>
+                <select name="barang" id="barang">
+                    {detailProduct.map((product) => (
+                        <option value={product.id}>{product.attributes.nama}</option>
+                ))}
+                </select>
+                
+                <label for="jumlah_beli">Jumlah Beli:</label>
+                <input type="number" id="jumlah_beli" name="jumlah_beli" required>
+        
+                <label for="jenis_pembayaran">Jenis Pembayaran:</label>
+                <input type="text" id="jenis_pembayaran" name="jenis_pembayaran" required>
+        
+                <label for="tanggal_pesan">Tanggal Pesan :</label>
+                <input type="date" id="tanggal_pesan" name="tanggal_pesan" value={today}>
+
+                <label for="total_harga">Total Harga:</label>
+                <div id="harga_total"></div>
+                <input type="hidden" id="total_harga" name="total_harga" required readonly>
+                
+                <button type="submit">Tambah Pesanan</button>
+            </form>
+        </div>
+    </div>
+
+        <script>
+             async function updateTotalHarga() {
+                const barangId = (document.getElementById('barang') as HTMLInputElement).value;
+                const jumlahBeli = parseInt((document.getElementById('jumlah_beli') as HTMLInputElement).value);
+    
+                if (barangId && jumlahBeli > 0) {
+                    try {
+                        const response = await fetch(`http://localhost:1337/api/barangs/${barangId}`);
+                        if (response.ok) {
+                            const barangData = await response.json();
+                            const hargaSatuan = barangData.data.attributes.harga_satuan;
+    
+                            const totalHarga = jumlahBeli * hargaSatuan;
+                            (document.getElementById('total_harga') as HTMLInputElement).value = totalHarga.toFixed(2);
+                            (document.getElementById('harga_total') as HTMLDivElement).textContent = `Rp.  ${totalHarga.toLocaleString('id-ID')}`;
+                        } else {
+                            alert('Gagal mengambil harga satuan barang.');
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        alert('Terjadi kesalahan saat mengambil harga satuan barang.');
+                    }
+                }
+            }
+    
+            document.getElementById('jumlah_beli')?.addEventListener('input', updateTotalHarga);
+            document.getElementById('barangs')?.addEventListener('input', updateTotalHarga);
+
+            document.getElementById('addItemForm')?.addEventListener('submit', async function(event) {
+                event.preventDefault();
+    
+                const nama_pemesan = (document.getElementById('nama_pemesan') as HTMLInputElement).value;
+                const jumlah_beli = (document.getElementById('jumlah_beli') as HTMLInputElement).value;
+                const total_harga = (document.getElementById('total_harga') as HTMLInputElement).value;
+                const jenis_pembayaran = (document.getElementById('jenis_pembayaran') as HTMLInputElement).value;
+                const tanggal_pesan = (document.getElementById('tanggal_pesan') as HTMLInputElement).value;
+                const barangs = (document.getElementById('barang') as HTMLInputElement).value;
+    
+                const data = {
+                    data: {
+                        nama_pemesan: nama_pemesan,
+                        jumlah_beli: parseInt(jumlah_beli),
+                        total_harga: parseFloat(total_harga),
+                        jenis_pembayaran: jenis_pembayaran,
+                        tanggal_pesan: tanggal_pesan,
+                        barangs: barangs
+                    }
+                };
+    
+                try {
+                    const response = await fetch('http://localhost:1337/api/pemesanans', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    });
+    
+                    if (response.ok) {
+                        alert('Pesanan berhasil ditambahkan!');
+                        (document.getElementById('addItemForm') as HTMLFormElement).reset();
+                        window.location.href = '/crud/pemesanan'
+                    } else {
+                        const errorData = await response.json();
+                        alert('Gagal menambahkan pemesanan: ' + JSON.stringify(errorData));
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan.');
+                }
+            });
+        </script>
+    </body>
+</html>

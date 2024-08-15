@@ -1,0 +1,60 @@
+---
+import '../../styles/global.css';
+import Navigation from '../../components/navigation.astro';
+
+const response = await fetch('http://localhost:1337/api/pemesanans?populate=*');
+const data = await response.json();
+const pemesanan = data.data;
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>CRUD-Pemesanan</title>
+	</head>
+	<body>
+        <Navigation></Navigation>
+        <div class="container">
+        <h1>Barang</h1>
+        <a href="/crud/addPemesanan"><button class="add-button">Tambah Data Pemesanan</button></a>
+        <br>
+        <div class="table-container">
+            <table class="pemesanan-table">
+              <thead>
+                <tr>
+                  <th>Nama Pemesan</th>
+                  <th>Tanggal Pesan</th>
+                  <th>Nama Barang</th>
+                  <th>Jumlah Beli</th>
+                  <th>Total Harga</th>
+                  <th>Jenis Pembayaran</th>
+                  <th>Opsi</th>
+                </tr>
+              </thead>
+              <tbody>
+                {pemesanan.map((pemesanans) => (
+                  <tr>
+                    <td>{pemesanans.attributes.nama_pemesan}</td>
+                    <td>{pemesanans.attributes.tanggal_pesan}</td>
+                    <td>
+                      {pemesanans.attributes.barangs.data.map((barang) => (
+                        <div>{barang.attributes.nama}</div>
+                      ))}
+                    </td>
+                    <td>{pemesanans.attributes.jumlah_beli}</td>
+                    <td>{pemesanans.attributes.total_harga}</td>
+                    <td>{pemesanans.attributes.jenis_pembayaran}</td>
+                    <td>
+                        <a href={`/crud/pemesanan/${pemesanans.id}`} class="table-link">Edit & Delete</a>  
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+    </body>
+</html>

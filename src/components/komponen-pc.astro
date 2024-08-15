@@ -1,0 +1,48 @@
+---
+const response = await fetch('http://localhost:1337/api/barangs?populate=image');
+const data = await response.json();
+const komponen = data.data;
+
+const responses = await fetch('http://localhost:1337/api/barangs?populate=image&filters[id][$eq]=1&filters[id][$eq]=2');
+const datas = await responses.json();
+const componen = datas.data;
+
+---
+
+<div class="komponen-pc">
+    <div class="kanban-container">
+        {komponen.map((komponens) => {
+            const imageUrl = `http://localhost:1337${komponens.attributes.image.data.attributes.url}`;
+            return (
+            <a href={`/product/${komponens.id}`} class="kanban-link">
+                <div class="kanban-card">
+                    <img src={imageUrl} alt={komponens.attributes.nama} class="kanban-image" />
+                    <h3>{komponens.attributes.nama}</h3>
+                    <h4>Rp. {komponens.attributes.harga_satuan.toLocaleString('id-ID')}</h4>
+                </div>
+            </a>
+         );
+        })}
+    </div>
+    <h1>Best Seller !</h1>
+    <div class="kanban-container2">
+        {componen.map((komponens) => {
+            const imageUrl = `http://localhost:1337${komponens.attributes.image.data.attributes.url}`;
+            return (
+                <a href={`/crud/barang/${komponens.id}`} class="kanban-link2">
+                    <div class="kanban-card2">
+                        <img src={imageUrl} alt={komponens.attributes.nama} class="kanban-image2" />
+                        <h3>{komponens.attributes.nama}</h3>
+                        <h4>Rp. {komponens.attributes.harga_satuan.toLocaleString('id-ID')}</h4>
+                    </div>
+                </a>
+            );
+        })}
+    </div>
+</div>
+
+<style>
+    h1{
+        margin-top: 50px;
+    }
+</style>

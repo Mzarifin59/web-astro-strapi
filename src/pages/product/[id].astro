@@ -1,0 +1,46 @@
+---
+import '../../styles/global.css'
+import NavigationBar from '../../components/navigation-bar.astro';
+
+export async function getStaticPaths() {
+  const response = await fetch('http://localhost:1337/api/barangs');
+  const productsData = await response.json();
+
+  return productsData.data.map((product) => ({
+    params: { id: product.id.toString() },
+  }));
+}
+
+const { id } = Astro.params;
+
+const response = await fetch(`http://localhost:1337/api/barangs/${id}?populate=image`);
+const data = await response.json();
+const detailProduct = data.data;
+
+const productId = detailProduct?.id || '';
+const productName = detailProduct?.attributes?.nama || 'Product Not Found';
+const productImage = `http://localhost:1337${detailProduct.attributes.image.data.attributes.url}` || '/path/to/placeholder-image.jpg';
+const productPrice = detailProduct?.attributes?.harga_satuan || 0;
+const productStock = detailProduct?.attributes?.stock || 0;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{productName}</title>
+</head>
+<body>
+    <NavigationBar></NavigationBar>
+    <div class="container">
+    <div class="product-detail">
+        <img src={productImage} alt={productName} class="product-image" />
+        <h1>{productName}</h1>
+        <p>Harga : Rp. {productPrice.toLocaleString('id-ID')}</p>
+        <p>Stock : {productStock}</p>
+        <a href=`/order/${productId}`><button class="order-button" id="orderButton">Pesan Sekarang</button></a>
+    </div>
+  </div>
+</body>
+</html>

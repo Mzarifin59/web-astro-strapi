@@ -1,0 +1,42 @@
+---
+import '../../styles/global.css';
+import Navigation from '../../components/navigation.astro';
+
+const response = await fetch('http://localhost:1337/api/barangs?populate=image');
+const data = await response.json();
+const komponen = data.data;
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>CRUD-Barang</title>
+	</head>
+	<body>
+        <Navigation></Navigation>
+        <div class="container">
+        <h1>Barang</h1>
+        <a href="/crud/addBarang"><button class="add-button">Tambah Data Barang</button></a>
+        <br>
+        <div class="komponen-pc">
+            <div class="kanban-container2">
+                {komponen.map((komponens) => {
+                    const imageUrl = `http://localhost:1337${komponens.attributes.image.data.attributes.url}`;
+                    return (
+                        <a href={`/crud/barang/${komponens.id}`} class="kanban-link2">
+                            <div class="kanban-card2">
+                                <img src={imageUrl} alt={komponens.attributes.nama} class="kanban-image2" />
+                                <h3>{komponens.attributes.nama}</h3>
+                                <h4>Rp. {komponens.attributes.harga_satuan.toLocaleString('id-ID')}</h4>
+                            </div>
+                        </a>
+                    );
+                })}
+            </div>
+        </div>
+        </div>
+    </body>
+</html>

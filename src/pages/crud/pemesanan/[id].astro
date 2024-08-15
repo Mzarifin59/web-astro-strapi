@@ -1,0 +1,201 @@
+---
+import '../../../styles/global.css'
+import Navigation from '../../../components/navigation.astro';
+
+export async function getStaticPaths() {
+  const response = await fetch('http://localhost:1337/api/pemesanans');
+  const pesananData = await response.json();
+
+  return pesananData.data.map((pesan) => ({
+    params: { id: pesan.id.toString() },
+  }));
+}
+
+const { id } = Astro.params;
+
+const response = await fetch(`http://localhost:1337/api/pemesanans/${id}?populate=*`);
+const data = await response.json();
+const pesanan = data.data;
+
+const pesananId = pesanan?.id || '';
+const namaPemesan = pesanan?.attributes?.nama_pemesan || 'Pemesan Not Found';
+const jumlahBeli = pesanan?.attributes?.jumlah_beli || 'Jumlah Not Found';
+const Barang = pesanan?.attributes?.barangs?.data?.attributes?.nama || 'Barang Not Found';
+const totalHarga = pesanan?.attributes?.total_harga || 0;
+const jenisPembayaran = pesanan?.attributes?.jenis_pembayaran || 'Jenis Pembayaran Not Found';
+const tanggalPesan = pesanan?.attributes?.tanggal_pesan || '';
+const selectedBarangId = pesanan?.attributes?.barangs?.data[0]?.id || '';
+
+const responseBarangs = await fetch('http://localhost:1337/api/barangs');
+const dataBarangs = await responseBarangs.json();
+const detailProduct = dataBarangs.data;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+        <title> Edit dan Hapus {namaPemesan}</title>
+
+        <style>
+            h1{
+                text-align: center;
+            }
+        </style>
+</head>
+<body>
+    <Navigation></Navigation>
+    <div class="container">
+        <h1>Edit dan Hapus Pemesanan</h1>
+    <div class="form-container">
+        <form id="addItemForm">
+            <input type="hidden" name="id" id="id" value={pesananId}>
+
+            <label for="nama_pemesan">Nama Pemesan:</label>
+            <input type="text" id="nama_pemesan" name="nama_pemesan" value={namaPemesan} required>
+
+            <label for="barang">Barang :</label>
+            <select name="barang" id="barang">
+                {detailProduct.map((product) => (
+                    <option 
+                        value={product.id}
+                        selected={product.id === selectedBarangId}
+                    >
+                        {product.attributes.nama}
+                    </option>
+                ))}
+            </select>
+            
+            <label for="jumlah_beli">Jumlah Beli:</label>
+            <input type="number" id="jumlah_beli" name="jumlah_beli" value={jumlahBeli} required>
+    
+            <label for="jenis_pembayaran">Jenis Pembayaran:</label>
+            <input type="text" id="jenis_pembayaran" name="jenis_pembayaran" value={jenisPembayaran} required>
+    
+            <label for="tanggal_pesan">Tanggal Pesan :</label>
+            <input type="date" id="tanggal_pesan" name="tanggal_pesan" value={tanggalPesan} required>
+
+            <label for="total_harga">Total Harga:</label>
+            <input type="number" id="total_harga" name="total_harga" value={totalHarga} required readonly>
+            
+            <div class="button-group">
+                <button type="submit">Simpan Perubahan</button>
+                <button type="button" id="hapus">Hapus</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+
+            async function updateTotalHarga() {
+                const barangId = (document.getElementById('barang') as HTMLInputElement).value;
+                const jumlahBeli = parseInt((document.getElementById('jumlah_beli') as HTMLInputElement).value);
+    
+                if (barangId && jumlahBeli > 0) {
+                    try {
+                        const response = await fetch(`http://localhost:1337/api/barangs/${barangId}`);
+                        if (response.ok) {
+                            const barangData = await response.json();
+                            const hargaSatuan = barangData.data.attributes.harga_satuan;
+    
+                            const totalHarga = jumlahBeli * hargaSatuan;
+                            (document.getElementById('total_harga') as HTMLInputElement).value = totalHarga.toFixed(2);
+                        } else {
+                            alert('Gagal mengambil harga satuan barang.');
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        alert('Terjadi kesalahan saat mengambil harga satuan barang.');
+                    }
+                }
+            }
+    
+            document.getElementById('jumlah_beli')?.addEventListener('input', updateTotalHarga);
+            document.getElementById('barangs')?.addEventListener('input', updateTotalHarga);
+
+        document.getElementById('addItemForm')?.addEventListener('submit', async function(this: HTMLFormElement, e: SubmitEvent) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        const id = formData.get('id');
+            
+            if (typeof id !== 'string') {
+                console.error('Invalid ID');
+                return;
+            }   
+    
+            const updateData = {
+                data: {
+                    nama_pemesan: formData.get('nama_pemesan') as string,
+                    jumlah_beli: parseInt(formData.get('jumlah_beli') as string),
+                    total_harga: parseFloat(formData.get('total_harga') as string),
+                    jenis_pembayaran: formData.get('jenis_pembayaran') as string,
+                    tanggal_pesan: formData.get('tanggal_pesan') as string,
+                    barangs: formData.get('barang') as string,
+                }
+            };
+    
+            try {
+                const response = await fetch(`http://localhost:1337/api/pemesanans/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(updateData)
+                });
+    
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+    
+                const result = await response.json();
+                console.log('Update successful:', result);
+                alert('Product updated successfully!');
+                window.location.href = '/crud/pemesanan'
+
+    
+            } catch (error) {
+                console.error('Error updating product:', error);
+                alert('Failed to update product. Please try again.');
+            }
+        });
+    
+
+        document.getElementById('hapus')?.addEventListener('click', async function() {
+        const formData = new FormData(document.getElementById('addItemForm') as HTMLFormElement);
+        const id = formData.get('id');
+
+        if (typeof id !== 'string') {
+            console.error('Invalid ID');
+            return;
+        }
+
+        if (confirm('Are you sure you want to delete this item?')) {
+            try {
+                const response = await fetch(`http://localhost:1337/api/pemesanans/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                console.log('Delete successful');
+                alert('Product deleted successfully!');
+                window.location.href = '/crud/pemesanan';
+            } catch (error) {
+                console.error('Error deleting product:', error);
+                alert('Failed to delete product. Please try again.');
+            }
+        }
+    });
+
+    </script>
+</body>
+</html>

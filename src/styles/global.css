@@ -1,0 +1,501 @@
+html {
+    background-color: #f5f5f5;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f7f9fc;
+}
+
+.container {
+    margin: 30px auto;
+    max-width: 1200px;
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    line-height: 1.6;
+}
+
+h1 {
+    color: #134B70;
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: 1.5px;
+}
+
+p {
+    color: #555555;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    text-align: justify;
+}
+
+img {
+    max-width: 80%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: block;
+    margin: 30px auto;
+}
+
+.navbar {
+    background-color: #ffffff;
+    box-shadow: 0 4px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar-brand p {
+    color: #134B70;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.navbar-links {
+    display: flex;
+    gap: 20px;
+}
+
+.navbar a {
+    color: #134B70;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 10px 15px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.navbar a:hover {
+    background-color: #6482AD;
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        padding: 15px;
+    }
+
+    .navbar-brand {
+        margin-bottom: 15px;
+    }
+
+    .navbar-links {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .navbar a {
+        text-align: center;
+        padding: 12px;
+    }
+}
+
+
+/* img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+} */
+
+.kanban-container2 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: stretch;
+}
+
+.kanban-card2 {
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 200px;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    height: 90%;
+}
+
+.kanban-image2 {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.kanban-card2 h3{
+    margin-top: auto;
+}
+
+   .kanban-card2:hover{
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    background-color: #6482AD;
+    transform: translateY(-5px); 
+} 
+
+    .kanban-link2 {
+    text-decoration: none;
+    color: inherit;
+} 
+
+.kanban-container {
+    display: flex;
+    gap: 20px;
+    align-items: stretch;
+    overflow-x: auto; /* Menambahkan horizontal scroll */
+    padding: 10px;
+    white-space: nowrap; /* Mencegah konten untuk membungkus ke baris berikutnya */
+    scroll-snap-type: x mandatory; /* Menambahkan snap pada elemen saat scrolling */
+}
+
+.kanban-card {
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 200px;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    height: 90%;
+    scroll-snap-align: start; 
+    margin-top: auto;
+    word-wrap: break-word; 
+    overflow-wrap: break-word; 
+    text-overflow: ellipsis; 
+    white-space: normal; 
+    overflow: hidden; 
+}
+
+.kanban-image {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.kanban-card h3 {
+    margin-top: auto;
+}
+
+.kanban-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    background-color: #6482AD;
+}
+
+.kanban-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.kanban-container::-webkit-scrollbar {
+    height: 8px; /* Mengatur tinggi scrollbar */
+}
+
+.kanban-container::-webkit-scrollbar-thumb {
+    background-color: #ccc; /* Warna scrollbar */
+    border-radius: 4px;
+}
+
+.kanban-container::-webkit-scrollbar-thumb:hover {
+    background-color: #6482AD; /* Warna scrollbar saat dihover */
+}
+
+
+
+
+.product-detail {
+    max-width: 90%;
+    margin: 0 auto;
+    padding: 15px;
+  }
+
+  .product-detail-order {
+    max-width: 45%;
+    margin: 0 auto;
+    padding: 15px;
+    text-align: center;
+  }
+  
+  .product-image {
+    width: 30%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+
+  .product-image-order {
+    width: 50%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  
+  .order-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #6482AD;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+  
+  .order-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    background-color: #134B70;
+  }
+
+  .form-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #f4f4f4;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-container label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+    font-size: 1rem;
+}
+
+.form-container input[type="text"],
+.form-container input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    color: #555;
+}
+
+.form-container input::placeholder {
+    color: #aaa;
+}
+
+.form-container input:focus {
+    border-color: #6482AD;
+    outline: none;
+    box-shadow: 0 0 5px rgba(100, 130, 173, 0.5);
+}
+
+.form-container #harga_total {
+    font-size: 1.5rem;
+    color: #2c3e50;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.form-container select,
+.form-container input[type="date"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    color: #555;
+    background-color: #fff;
+    appearance: none; /* Menghilangkan panah default pada select */
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 12px;
+}
+
+.form-container input[type="date"] {
+    appearance: textfield; /* Mengembalikan default appearance pada input date */
+    background-image: none; /* Menghapus icon background custom untuk input date */
+}
+
+.form-container select:focus,
+.form-container input[type="date"]:focus {
+    border-color: #6482AD;
+    outline: none;
+    box-shadow: 0 0 5px rgba(100, 130, 173, 0.5);
+}
+
+.form-container select:active,
+.form-container input[type="date"]:active {
+    border-color: #134B70;
+}
+
+.form-container select option {
+    padding: 10px;
+    background-color: #fff;
+    color: #555;
+}
+
+.form-container select:disabled,
+.form-container input[type="date"]:disabled {
+    background-color: #eee;
+    color: #aaa;
+    cursor: not-allowed;
+}
+
+.form-container input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: none; /* Memastikan icon kalender tetap terlihat */
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px; 
+    margin-top: 30px;
+}
+
+.form-container button {
+    background-color: #6482AD;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    width: 100%;
+    margin-top: 20px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-container button:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    background-color: #134B70;
+}
+
+.form-container button:active {
+    transform: scale(1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.button-group button {
+    flex: 1; 
+    background-color: #6482AD;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.button-group button:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    background-color: #134B70;
+}
+
+.button-group button:active {
+    transform: scale(1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+  }
+  
+  .pemesanan-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 18px;
+    text-align: left;
+  }
+  
+  .pemesanan-table th, .pemesanan-table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+  }
+  
+  .pemesanan-table th {
+    background-color: #f2f2f2;
+    color: #333;
+  }
+  
+  .pemesanan-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .pemesanan-table tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .pemesanan-table td div {
+    margin-bottom: 5px;
+  }
+  
+  .table-link {
+    color: #6482AD;
+    text-decoration: none;
+    margin-right: 10px;
+  }
+  
+  .table-link:hover {
+    text-decoration: underline;
+  }
+  
+  .table-link:last-child {
+    margin-right: 0;
+  }
+
+  .add-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #6482AD;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s;
+    margin-bottom: 30px;
+  }
+
+  .add-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    background-color: #134B70;
+  }
