@@ -1,39 +1,50 @@
 ---
-import '../styles/global.css'
-import NavigationBar from '../components/navigation-bar.astro'
-import { Image } from 'astro:assets';
-import Procecor from '../assets/procecor.jpg';
-import VGAImage from '../assets/VGA.jpg';
+import "../styles/global.css";
+import NavigationBar from "../components/navigation-bar.astro";
+import { Image } from "astro:assets";
+import Procecor from "../assets/procecor.jpg";
+import VGAImage from "../assets/VGA.jpg";
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Store</title>
-	</head>
-	<body>
-        <NavigationBar></NavigationBar>
-        <div class="container">
-            <h1>Komponen Komputer Astro</h1>
-            <p>Selamat datang di Komponen Komputer Astro, destinasi terpercaya Anda untuk menemukan beragam komponen 
-                komputer berkualitas tinggi. Website ini dirancang untuk memudahkan Anda dalam menelusuri dan membeli 
-                berbagai komponen komputer, mulai dari prosesor, motherboard, hingga aksesori tambahan yang akan 
-                meningkatkan performa perangkat Anda.</p>
-            <img src={VGAImage.src} alt="VGA Image">
-            <p>Di Komponen Komputer Astro, kami memahami betapa pentingnya memiliki perangkat keras yang andal untuk 
-                mendukung produktivitas dan hobi Anda. Oleh karena itu, kami menyediakan informasi lengkap dan 
-                terkini mengenai setiap produk yang kami tawarkan, termasuk spesifikasi teknis dan harga yang 
-                kompetitif. Dengan tampilan yang sederhana namun elegan, Anda dapat dengan mudah menemukan komponen 
-                yang Anda butuhkan dan melakukan pemesanan dengan cepat.</p>
-            <img src={Procecor.src} alt="Procecor Image">
-            <p>Di Komponen Komputer Astro, kami memahami betapa pentingnya memiliki perangkat keras yang andal untuk 
-                mendukung produktivitas dan hobi Anda. Oleh karena itu, kami menyediakan informasi lengkap dan terkini 
-                mengenai setiap produk yang kami tawarkan, termasuk spesifikasi teknis dan harga yang kompetitif. 
-                Dengan tampilan yang sederhana namun elegan, Anda dapat dengan mudah menemukan komponen yang Anda 
-                butuhkan dan melakukan pemesanan dengan cepat.</p>
-        </div>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro Store</title>
+  </head>
+  <body>
+    <NavigationBar />
+    <div class="container">
+      <h1>Komponen Komputer Astro</h1>
+      <p>
+        Selamat datang di Komponen Komputer Astro, destinasi terpercaya Anda
+        untuk menemukan beragam komponen komputer berkualitas tinggi. Website
+        ini dirancang untuk memudahkan Anda dalam menelusuri dan membeli
+        berbagai komponen komputer, mulai dari prosesor, motherboard, hingga
+        aksesori tambahan yang akan meningkatkan performa perangkat Anda.
+      </p>
+      <img src={VGAImage.src} alt="VGA Image" />
+      <p>
+        Di Komponen Komputer Astro, kami memahami betapa pentingnya memiliki
+        perangkat keras yang andal untuk mendukung produktivitas dan hobi Anda.
+        Oleh karena itu, kami menyediakan informasi lengkap dan terkini mengenai
+        setiap produk yang kami tawarkan, termasuk spesifikasi teknis dan harga
+        yang kompetitif. Dengan tampilan yang sederhana namun elegan, Anda dapat
+        dengan mudah menemukan komponen yang Anda butuhkan dan melakukan
+        pemesanan dengan cepat.
+      </p>
+      <img src={Procecor.src} alt="Procecor Image" />
+      <p>
+        Di Komponen Komputer Astro, kami memahami betapa pentingnya memiliki
+        perangkat keras yang andal untuk mendukung produktivitas dan hobi Anda.
+        Oleh karena itu, kami menyediakan informasi lengkap dan terkini mengenai
+        setiap produk yang kami tawarkan, termasuk spesifikasi teknis dan harga
+        yang kompetitif. Dengan tampilan yang sederhana namun elegan, Anda dapat
+        dengan mudah menemukan komponen yang Anda butuhkan dan melakukan
+        pemesanan dengan cepat.
+      </p>
+    </div>
+  </body>
 </html>
